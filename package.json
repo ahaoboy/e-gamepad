@@ -1,8 +1,12 @@
 {
-  "version": "0.3.0",
+  "version": "0.4.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "author": "ahaoboy",
+  "description": "Library for gamepad api, zero dependencies",
+  "homepage": "https://github.com/ahaoboy/e-gamepad",
+  "sideEffects": false,
   "files": [
     "dist",
     "src"
@@ -33,7 +37,6 @@
     "trailingComma": "es5"
   },
   "name": "e-gamepad",
-  "author": "阿豪boy",
   "module": "dist/e-gamepad.esm.js",
   "size-limit": [
     {
@@ -52,5 +55,13 @@
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
     "typescript": "^4.4.3"
-  }
+  },
+  "tags": [
+    "typescript",
+    "gamepad"
+  ],
+  "keywords": [
+    "typescript",
+    "gamepad"
+  ]
 }
