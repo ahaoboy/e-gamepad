@@ -1,13 +1,17 @@
 ## Demo
-### -demo1  [`demo1`](https://e-gamepad.vercel.app/move.html)
-### -deme2  [`demo2`](https://e-gamepad.vercel.app/index.html)
+
+### -[demo1](https://e-gamepad.vercel.app/move.html)
+### -[demo2](https://e-gamepad.vercel.app/index.html)
+### -[npm](https://www.npmjs.com/package/e-gamepad)
 
 ## install
+
 ```
 yarn add e-gamepad
 ```
 
 ## use
+
 ```
 import { GamePad, Event } from "./dist/e-gamepad.esm.js";
 const fps = 60;
