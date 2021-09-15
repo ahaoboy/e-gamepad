@@ -12,5 +12,9 @@ export enum Event {
   Axes,
   All,
 }
-export type State = { index: number; buttons: number[]; axes: number[] };
+export type State = {
+  index: number;
+  buttons: { state: number; value: number }[];
+  axes: number[];
+};
 export type Cb = (data: State[]) => void;

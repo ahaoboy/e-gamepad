@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,13 +13,75 @@
             height: 100px;
             background: deepskyblue;
         }
+
+        .btn,
+        .axis {
+            width: 100%;
+            height: 16px;
+            position: absolute;
+            top: 0;
+            white-space: nowrap;
+        }
+
+        .axis-wrap {
+            width: 60vh;
+            height: 16px;
+            position: relative;
+            background: gray;
+        }
+
+        .axis {
+            width: 60vh;
+            height: 16px;
+            position: absolute;
+            top: 0;
+            white-space: nowrap;
+            background: deepskyblue;
+        }
+
+        .btn-wrap {
+            width: 60vw;
+            height: 16px;
+            background: gray;
+            position: relative;
+        }
+
+        .btn.press {
+            background: greenyellow;
+        }
+
+        .btn.down {
+            background: deepskyblue;
+        }
+
+        .btn.up {
+            background: deeppink;
+        }
     </style>
 
 </head>
-
 <body>
-    <div id='ball'>aa</div>
     <script src="./index.js" type='module'></script>
+    <div v-scope @mounted="mounted">
+        <div class="pad" v-for="(pad,k) in state">
+            <h1>pad{{k}}</h1>
+            <h2>button</h2>
+            <div class='btn-group'>
+                <div class='btn-wrap' v-for="(i,k) in pad.buttons">
+                    <div class='btn' :style="i.style" :class="classMap[i.state]">
+                        {{k}}: {{i.value}}
+                    </div>
+                </div>
+            </div>
+            <h2>axis</h2>
+            <div class='axis-group'>
+                <div class='axis-wrap' v-for="(i,k) in pad.axes">
+                    <div class='axis' :style="`width:${(i+1)*100 / 2}%`">
+                        {{k}}: {{i}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
-
 </html>

@@ -1,8 +1,8 @@
-// import { sum } from '../src';
+// import { Gamepad } from '../src';
 
 // describe('blah', () => {
 //   it('works', () => {
-//     expect(sum(1, 1)).toEqual(2);
+//     expect(Gamepad(1, 1)).toEqual(2);
 //   });
 // });
 

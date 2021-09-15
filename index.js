@@ -1,54 +1,30 @@
 import { GamePad, Event } from "./dist/e-gamepad.esm.js";
-const ball = document.getElementById("ball");
+import { createApp } from "https://unpkg.com/petite-vue?module";
 const fps = 60;
 const pad = new GamePad({ fps });
-// pad.onAll((data) => {
-//   console.log(data);
-// });
-const speed = 2;
-let x = 0;
-let y = 0;
-const move = (d = 0) => {
-  if (d === 0) {
-    // up
-    y -= speed;
-  } else if (d === 1) {
-    // down
-    y += speed;
-  } else if (d === 2) {
-    // left
-    x -= speed;
-  } else if (d === 3) {
-    // right
-    x += speed;
-  }
-  ball.style.left = `${x}px`;
-  ball.style.top = `${y}px`;
-};
-
-const cb = (data) => {
-  data[0].buttons.forEach((i, k) => {
-    if (i === Event.Down || i === Event.Press) {
-      if (k === 15) {
-        move(3);
-      } else if (k === 12) {
-        move(0);
-      } else if (k === 13) {
-        move(1);
-      } else if (k === 14) {
-        move(2);
+createApp({
+  state: [],
+  classMap: {
+    [Event.Down]: "down",
+    [Event.Up]: "up",
+    [Event.None]: "none",
+    [Event.Press]: "press",
+  },
+  increment() {
+    this.count++;
+  },
+  mounted() {
+    pad.onAll((data) => {
+      for (const p of data) {
+        for (const b of p.buttons) {
+          b.style = {
+            width: `${b.value * 100}%`,
+          };
+        }
       }
-    }
-  });
-};
-pad.on(Event.Down, (data) => {
-  console.log("Down", data);
-  cb(data);
-});
-pad.on(Event.Up, (data) => {
-  console.log("up", data);
-});
-pad.on(Event.Press, (data) => {
-  console.log("Press", data);
-  cb(data);
-});
+      for (let i = 0; i < data.length; i++) {
+        this.state[i] = data[i];
+      }
+    });
+  },
+}).mount();

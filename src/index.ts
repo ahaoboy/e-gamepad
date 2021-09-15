@@ -28,26 +28,40 @@ export class GamePad {
       buttons: Array(g.buttons.length).fill(-1),
       axes: Array.from([1]),
     };
-    const touched = Array.from(g.buttons).map((i) => i.touched);
+    const buttons = g.buttons;
     // console.log("curState", preState.button, g.buttons);
-    for (let i = 0; i < touched.length; i++) {
+    for (let i = 0; i < buttons.length; i++) {
       if (
-        (preState.buttons[i] === Event.Press ||
-          preState.buttons[i] === Event.Down) &&
-        touched[i]
+        (preState.buttons[i].state === Event.Press ||
+          preState.buttons[i].state === Event.Down) &&
+        buttons[i].pressed
       ) {
-        s.buttons[i] = Event.Press;
+        s.buttons[i] = {
+          state: Event.Press,
+          value: buttons[i].value,
+        };
       } else if (
-        (preState.buttons[i] === Event.Press ||
-          preState.buttons[i] === Event.Down) &&
-        !touched[i]
+        (preState.buttons[i].state === Event.Press ||
+          preState.buttons[i].state === Event.Down) &&
+        !buttons[i].pressed
       ) {
-        s.buttons[i] = Event.Up;
-      } else if (preState.buttons[i] === Event.None && touched[i]) {
-        s.buttons[i] = Event.Down;
+        s.buttons[i] = {
+          state: Event.Up,
+          value: buttons[i].value,
+        };
+      } else if (
+        preState.buttons[i].state === Event.None &&
+        buttons[i].pressed
+      ) {
+        s.buttons[i] = {
+          state: Event.Down,
+          value: buttons[i].value,
+        };
       } else {
-        // console.error("curState22", preState.button, g.buttons);
-        s.buttons[i] = Event.None;
+        s.buttons[i] = {
+          state: Event.None,
+          value: 0,
+        };
       }
     }
     return s;
@@ -75,19 +89,19 @@ export class GamePad {
       if (
         e === Event.Down &&
         s &&
-        state.some((i) => i.buttons.includes(Event.Down))
+        state.some((i) => i.buttons.find((i) => i.state === Event.Down))
       ) {
         s.forEach((f) => f(state));
       } else if (
         e === Event.Up &&
         s &&
-        state.some((i) => i.buttons.includes(Event.Up))
+        state.some((i) => i.buttons.find((i) => i.state === Event.Up))
       ) {
         s.forEach((f) => f(state));
       } else if (
         e === Event.Press &&
         s &&
-        state.some((i) => i.buttons.includes(Event.Press))
+        state.some((i) => i.buttons.find((i) => i.state === Event.Press))
       ) {
         s.forEach((f) => f(state));
       } else if (e === Event.Axes && s) {
