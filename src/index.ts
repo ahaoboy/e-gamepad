@@ -6,14 +6,13 @@ export class GamePad {
   fpsInterval: number;
   preState: State[];
   curState: State[];
-  preTime: number;
   cbMap = new Map<Event, Set<Cb>>();
+  handler: number = 0;
   constructor(config?: Config) {
     const c = { ...initConfig, ...config };
     this.fps = c.fps;
     this.preState = [];
     this.curState = [];
-    this.preTime = performance.now();
     this.fpsInterval = 1000 / this.fps;
     this.run();
   }
@@ -67,12 +66,9 @@ export class GamePad {
     return s;
   }
   private run() {
-    requestAnimationFrame(() => this.run());
-    const now = performance.now();
-    if (now - this.preTime <= this.fpsInterval) {
-      return;
-    }
-    this.preTime = now;
+    this.handler = window.setTimeout(() => {
+      this.run();
+    }, this.fpsInterval);
     const gamepads = Array.from(navigator.getGamepads?.() ?? []).filter(
       (i): i is Gamepad => i !== null
     );
@@ -111,7 +107,9 @@ export class GamePad {
       }
     }
   }
-
+  destroy() {
+    window.clearTimeout(this.handler);
+  }
   on<T extends Event>(e: T, cb: Cb) {
     const s = this.cbMap.get(e);
     if (s) {

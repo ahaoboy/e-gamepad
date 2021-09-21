@@ -2,6 +2,7 @@
 
 ### -[demo1](https://e-gamepad.vercel.app/move.html)
 ### -[demo2](https://e-gamepad.vercel.app/index.html)
+### -[demo3](https://e-nes.vercel.app/)
 ### -[npm](https://www.npmjs.com/package/e-gamepad)
 
 ## install
